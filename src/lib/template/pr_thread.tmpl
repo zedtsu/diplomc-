@@ -1,0 +1,23 @@
+<% c++ #include "controller/prthread.h" %>
+<% skin my_skin %>
+<% view pr_thread uses Content::prThread extends thread %>
+
+<% template boardHead() %>
+<%include thread::boardHead() %>
+<% if ( content.mode.name != "ascetic" ) %>
+    <script type="text/javascript">
+        /*ololord global object*/
+
+        var lord = lord || {};
+
+        /*Functions*/
+
+        lord.reloadCaptchaFunction = function() {
+            lord.reloadPage();
+        };
+    </script>
+<% end %>
+<% end template %>
+
+<% end view %>
+<% end skin %>

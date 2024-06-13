@@ -1,0 +1,136 @@
+<% c++ #include "controller/board.h" %>
+<% skin my_skin %>
+<% view board uses Content::Board extends base_board %>
+
+<% template threads() %>
+<% foreach thread in threads %>
+    <% item %>
+        <hr />
+        <div id="thread<%= thread.opPost.number %>" class="thread">
+            <% include post(thread.opPost, thread.self()) %>
+        </div>
+        <% if ( thread.omittedPosts() > 0 ) %>
+            <div id="threadOmitted<%= thread.opPost.number %>" class="omittedPosts">
+                <%= omittedPostsText %> <%= thread.omittedPosts() %>
+            </div>
+        <% end %>
+        <div id="threadPosts<%= thread.opPost.number %>" class="threadPosts">
+        <% foreach p in thread.lastPosts %>
+            <% item %>
+                <% include post(p, thread.self()) %>
+            <% end %>
+        <% end %>
+        </div>
+    <% end %>
+<% end %>
+<% end template %>
+
+<% template pages() %>
+<div class="pages">
+    <% if ( content.currentPage > 0 ) %>
+        <span class="pagesItem metaPage">
+        <% if ( 1 == content.currentPage ) %>
+            [<a href="/<%= sitePathPrefix %><%= currentBoard.name %>"><%= toPreviousPageText %></a>]
+        <% else %>
+            [<a href="/<%= sitePathPrefix %><%= currentBoard.name %>/<%= previousPage() %>.html">
+                <%= toPreviousPageText %>
+            </a>] 
+        <% end %>
+        </span>
+    <% end %>
+    <% foreach page in pages %>
+        <% item %>
+            <% if ( page != content.currentPage ) %>
+                <span class="pagesItem">
+                    <% if ( page > 0 ) %>
+                        [<a href="/<%= sitePathPrefix %><%= currentBoard.name %>/<%= page %>.html"><%= page %></a>]
+                    <% else %>
+                        [<a href="/<%= sitePathPrefix %><%= currentBoard.name %>"><%= page %></a>]
+                    <% end %>
+                </span>
+            <% else %>
+                <span class="pagesItem currentPage">
+                    [<b><%= page %></b>]
+                </span>
+            <% end %>
+        <% end %>
+    <% empty %>
+    <% end %>
+    <% if ( content.currentPage < content.pages.size() - 1 ) %>
+        <span class="pagesItem metaPage">
+            [<a href="/<%= sitePathPrefix %><%= currentBoard.name %>/<%= nextPage() %>.html"><%= toNextPageText %></a>]
+        </span>
+    <% end %>
+</div>
+<%end template %>
+
+<% template render() %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <% include baseHead(1) %>
+        <% include boardHead() %>
+    </head>
+    <body class="<%= deviceType %>">
+        <% include baseTexts() %>
+        <% if ( content.mode.name != "ascetic" ) %>
+            <% include boardTexts() %>
+        <% end %>
+        <input type="hidden" id="lastPostNumber" value="<%= lastPostNumber %>" />
+        <% include customHeader() %>
+        <% include navigationButton("bottom") %>
+        <% include leafButton("previous") %>
+        <% include leafButton("next") %>
+        <% include navigationButton("top") %>
+        <a id="top"></a>
+        <% include settings() %>
+        <br />
+        <% include navbar() %>
+        <br />
+        <% include searchAction() %>
+        <% if ( !content.bannerFileName.empty() ) %>
+            <br />
+            <% include banner() %>
+        <% end %>
+        <div class="theTitle">
+            <h1>
+                <%= currentBoard.title %>
+                <sup>[<a href="/<%= sitePathPrefix %><%= currentBoard.name %>/rules.html"
+                         title="<%= boardRulesLinkText %>"><img src="/<%= sitePathPrefix %>img/question.png"></a>]</sup>
+                <sup>[<a href="/<%= sitePathPrefix %><%= currentBoard.name %>/catalog.html"
+                         title="<%= boardCatalogLinkText %>"><img src="/<%= sitePathPrefix %>img/catalog.png"></a>]</sup>
+                <sup>[<a href="/<%= sitePathPrefix %><%= currentBoard.name %>/rss.xml" target="_blank"
+                         title="<%= boardRssLinkText %>"><img src="/<%= sitePathPrefix %>img/rss.png"></a>]</sup>
+            </h1>
+        </div>
+        <% if ( content.postingEnabled ) %>
+            <hr />
+            <% include createAction("Top") %>
+        <% else %>
+            <div class="postingDisabledMessage">
+                <h2><%= postingDisabledText %></h2>
+            </div>
+        <% end %>
+        <% include threads() %>
+        <% if ( content.mode.name != "ascetic" && content.postingEnabled ) %>
+            <hr />
+            <% include createAction("Bottom") %>
+        <% end %>
+        <hr />
+        <% include pages() %>
+        <hr />
+        <% include navbar() %>
+        <% if ( content.postingEnabled ) %>
+            <hr />
+            <div class="navbar">
+                <span class="navbarItem">[<%= postingSpeedText %> <%= postingSpeed %>]</span>
+            </div>
+        <% end %>
+        <a id="bottom"></a>
+        <% include customFooter() %>
+    </body>
+</html>
+<% end template %>
+
+<% end view %>
+<% end skin %>

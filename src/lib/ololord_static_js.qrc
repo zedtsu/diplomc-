@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>static/js/thread.js</file>
+        <file>static/js/3rdparty/sha1.js</file>
+        <file>static/js/3rdparty/picoModal-2.1.0.min.js</file>
+        <file>static/js/3rdparty/jszip.min.js</file>
+        <file>static/js/3rdparty/jszip-utils.min.js</file>
+        <file>static/js/3rdparty/FileSaver.min.js</file>
+        <file>static/js/3rdparty/lib-typedarrays-min.js</file>
+        <file>static/js/base.js</file>
+        <file>static/js/base_board.js</file>
+        <file>static/js/rpg_base.js</file>
+        <file>static/js/playlist.js</file>
+        <file>static/js/api.js</file>
+        <file>static/js/worker.js</file>
+        <file>static/js/manage.js</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,45 @@
+<% c++ #include "controller/rules.h" %>
+<% skin my_skin %>
+<% view rules uses Content::Rules extends base %>
+
+<% template render() %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <% include baseHead(1) %>
+    </head>
+    <body class="<%= deviceType %>">
+        <% include baseTexts() %>
+        <% include customHeader() %>
+        <% include settings() %>
+        <br />
+        <% include navbar() %>
+        <br />
+        <% include searchAction() %>
+        <div class="theTitle">
+            <h1><%= currentBoard.title %></h1>
+        </div>
+        <div class="rules">
+            <ol>
+            <%foreach rule in rules %>
+                <% item %>
+                    <li>
+                        <%= rule | raw %>
+                    </li>
+                <% end %>
+            <% empty %>
+                </ol>
+                <p>
+                    <%= noRulesText %>
+                </p>
+                <ol>
+            <% end %>
+            </ol>
+        </div>
+        <% include customFooter() %>
+    </body>
+</html>
+<% end template %>
+
+<% end view %>
+<% end skin %>

@@ -1,0 +1,31 @@
+<% c++ #include "controller/ipban.h" %>
+<% skin my_skin %>
+<% view ip_ban uses Content::IpBan extends base %>
+
+<% template render() %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <% include baseHead(1) %>
+    </head>
+    <body class="<%= deviceType %>">
+        <% include baseTexts() %>
+        <% include customHeader() %>
+        <% include settings() %>
+        <br />
+        <% include navbar() %>
+        <br />
+        <% include searchAction() %>
+        <div class="theTitle">
+            <h1><%= banMessage %></h1>
+        </div>
+        <div class="ipBan">
+            <%= banDescription %>
+        </div>
+        <% include customFooter() %>
+    </body>
+</html>
+<% end template %>
+
+<% end view %>
+<% end skin %>

@@ -1,0 +1,69 @@
+<% c++ #include "controller/echoboard.h" %>
+<% skin my_skin %>
+<% view echo_board uses Content::echoBoard extends board %>
+
+<% template customPostFormField3() %>
+<tr>
+    <td class="postformLabel">
+        <b><%= postFormLabelLink %></b>
+    </td>
+    <td class="postformField">
+        <input type="text" maxlength="<%= maxLinkLength %>" name="link" size="43" />
+     </td>
+</tr>
+<% end template %>
+
+<% template customPostFormFieldEdit3() %>
+<tr>
+    <td class="postformLabel">
+        <b><%= postFormLabelLink %></b>
+    </td>
+    <td class="postformField">
+        <input type="text" maxlength="<%= maxLinkLength %>" name="link" size="43" />
+     </td>
+</tr>
+<% end template %>
+
+<% template boardHead() %>
+<%include board::boardHead() %>
+<% if ( content.mode.name != "ascetic" ) %>
+    <script type="text/javascript">
+        /*ololord global object*/
+
+        var lord = lord || {};
+
+        /*Functions*/
+
+        lord.customEditFormSet = function(form, post) {
+            var a = lord.queryOne(".postSubject > a", post);
+            var link = lord.nameOne("link", form);
+            if (!a) {
+                var tr = link.parentNode.parentNode;
+                tr.parentNode.removeChild(tr);
+                return;
+            }
+            link.value = a.href;
+        };
+
+        lord.customEditFormGet = function(form, params) {
+            var link = lord.nameOne("link", form);
+            if (!link)
+                return null;
+            return link.value;
+        };
+
+        lord.createPostNodeCustom = function(post, res, permanent, boardName) {
+            if (!res["link"])
+                return;
+            var oldSubject = lord.queryOne(".postSubject", post);
+            var subject = lord.node("span");
+            subject.className = "postSubject";
+            subject.innerHTML = res["subject"];
+            oldSubject.parentNode.replaceChild(subject, oldSubject);
+        };
+    </script>
+<% end %>
+<% end template %>
+
+<% end view %>
+<% end skin %>

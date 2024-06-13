@@ -1,0 +1,76 @@
+<% c++ #include "controller/home.h" %>
+<% skin my_skin %>
+<% view home uses Content::Home extends base %>
+
+<% template render() %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <% include baseHead(1) %>
+    </head>
+    <body class="<%= deviceType %>">
+        <% include baseTexts() %>
+        <% include customHeader() %>
+        <% include settings() %>
+        <br />
+        <% include navbar() %>
+        <br />
+        <% include searchAction() %>
+        <div class="theTitle">
+            <h1><%= welcomeMessage %></h1>
+        </div>
+        <% if ( !content.custom.empty() ) %>
+            <%= custom | raw %>
+        <% end %>
+        <% if ( !content.friends.empty() ) %>
+            <div class="sectionHeader">
+                <h3><%= friendsHeader %></h3>
+            </div>
+            <div class="navbar">
+                <% foreach f in friends %>
+                    <% item %>
+                        <span class="navbarItem">[<a href="<%= f.url %>" title="<%= f.title %>"
+                              target="_blank"><%= f.name %></a>] </span>
+                    <% end %>
+                <% end %>
+            </div>
+        <% end %>
+        <% if ( !content.rules.empty() ) %>
+            <div class="sectionHeader">
+                <h3><%= rulesHeader %></h3>
+            </div>
+            <div class="rules">
+                <ol>
+                <% foreach rule in rules %>
+                     <% item %>
+                        <li>
+                            <%= rule | raw %>
+                        </li>
+                    <% end %>
+                <% end %>
+                </ol>
+            </div>
+        <% end %>
+        <% if ( !content.news.empty() ) %>
+            <div class="sectionHeader">
+                <h3><%= newsHeader %></h3>
+            </div>
+            <div class="rules">
+                <ul>
+                <% foreach n in news %>
+                     <% item %>
+                        <li>
+                            <%= n | raw %>
+                        </li>
+                    <% end %>
+                <% end %>
+                </ul>
+            </div>
+        <% end %>
+        <% include customFooter() %>
+    </body>
+</html>
+<% end template %>
+
+<% end view %>
+<% end skin %>

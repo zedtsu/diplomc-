@@ -1,0 +1,222 @@
+<% c++ #include "controller/markup.h" %>
+<% skin my_skin %>
+<% view markup uses Content::Markup extends base %>
+
+<% template render() %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <% include baseHead(1) %>
+    </head>
+    <body class="<%= deviceType %>">
+        <% include baseTexts() %>
+        <% include customHeader() %>
+        <% include settings() %>
+        <br />
+        <% include navbar() %>
+        <br />
+        <% include searchAction() %>
+        <div class="theTitle">
+            <h1><%= pageTitle %></h1>
+        </div>
+        <div class="sectionHeader">
+            <h3><%= basicMarkup %></h3>
+        </div>
+        <div class="rules">
+            **<b><%= boldText %></b>**
+            <br />
+            __<b><%= boldText %></b>__
+            <br />
+            [b]<b><%= boldText %></b>[/b]
+            <br /><br />
+            *<i><%= italics %></i>*
+            <br />
+            _<i><%= italics %></i>_
+            <br />
+            ///<i><%= italics %></i>///
+            <br />
+            [i]<i><%= italics %></i>[/i]
+            <br /><br />
+            ---<s><%= strikedoutText %></s>---
+            <br />
+            <s><%= strikedoutText %></s><%= strikedoutTextWakaba %>
+            <br />
+            [s]<s><%= strikedoutText %></s>[/s]
+            <br /><br />
+            <%= strikedoutWord1 %> <s><%= strikedoutWord2 %></s>^W
+            <br /><br />
+            ***<u><%= underlinedText %></u>***
+            <br />
+            ___<u><%= underlinedText %></u>___
+            <br />
+            [u]<u><%= underlinedText %></u>[/u]
+            <br /><br />
+            ``<font face="monospace"><%= monospace %></font>``
+            <br />
+            [m]<font face="monospace"><%= monospace %></font>[/m]
+            <br /><br />
+            ''[b]<%= nomarkup %>[/b]''
+            <br />
+            [n]**<%= nomarkup %>**[/n]
+            <br /><br />
+            ``<font face="monospace"><%= monospaceEscaped %></font>``
+            <br /><br />
+            ''[b]<%= nomarkupEscaped %>[/b]''
+            <br /><br />
+            /--pre
+            <pre><%= preformattedText %></pre>
+            \--
+            <br /><br />
+            [pre]
+            <pre><%= preformattedText %></pre>
+            [/pre]
+            <br /><br />
+            %%<span class="spoiler"><%= spoiler %></span>%%
+            <br />
+            [spoiler]<span class="spoiler"><%= spoiler %></span>[/spoiler]
+            <br /><br />
+            %%%<span class="cspoiler"><span class="cspoilerTitle" onclick="lord.expandCollapseSpoiler(this);">Spoiler</span><span class="cspoilerBody" style="display: none;"><%= cspoilerText %></span></span>%%%
+            <br />
+            [cspoiler title="<%= cspoilerTitle %>"]<span class="cspoiler"><span class="cspoilerTitle" title="Spoiler" onclick="lord.expandCollapseSpoiler(this);"><%= cspoilerTitle %></span><span class="cspoilerBody" style="display: none;"><%= cspoilerText %></span></span>[/cspoiler]
+            <br /><br />
+            <%= tooltipText %>???"<%= tooltip %>" —&gt;
+            <span class="tooltip" title="<%= tooltip %>"><%= tooltipText %></span>
+            <br /><br />
+            [tooltip value="<%= tooltip %>"]<span class="tooltip" title="<%= tooltip %>"><%= tooltipText %></span>[/tooltip]
+            <br /><br />
+            %%_[b]<span class="spoiler"><i><b><%= combinedText %></b></i></span>[/b]_%%
+            <br />
+            [spoiler][i]**<span class="spoiler"><i><b><%= combinedText %></b></i></span>**[/i][/spoiler]
+            <br /><br />
+            <span class="quotation">&gt;<%= quotation %></span>
+            <br /><br />
+            [sub]<sub><%= subscript %></sub>[/sub] (H<sub>2</sub>O)
+            <br /><br />
+            [sup]<sup><%= superscript %></sup>[/sup] (x<sup>3</sup> + y<sup>2</sup>)
+        </div>
+        <div class="sectionHeader">
+            <h3><%= linkMarkup %></h3>
+        </div>
+        <div class="rules">
+            <a href="javascript:void(0);">&gt;&gt;1675284</a> <%= postLinkDescription %>
+            <br /><br />
+            <a href="javascript:void(0);">&gt;&gt;/h/127154</a> <%= postBoardLinkDescription %>
+            <br /><br />
+            example.com —&gt; <a href="http://example.com">example.com</a>
+            <br /><br />
+            example1.com, (example2.com) —&gt; <a href="http://example1.com,">example1.com,</a> (<a href="http://example2.com)">example2.com)</a>
+            <br /><br />
+            [url]example1.com[/url], ([url]example2.com[/url]) —&gt; <a href="http://example.com">example1.com</a>, (<a href="http://example.com">example2.com</a>)
+            <br /><br />
+            mailto:user@example.com —&gt; <a href="mailto:user@example.com">user@example.com</a>
+            <br /><br />
+            irc:#some_channel —&gt; <a href="irc:#some_channel">#some_channel</a>
+        </div>
+        <div class="sectionHeader">
+            <h3><%= replacementMarkup %></h3>
+        </div>
+        <div class="rules">
+            -- (<%= doubleHyphen %>) —&gt; – (<%= enDash %>)
+            <br /><br />
+            ---- (<%= quadripleHyphen %>) —&gt; — (<%= emDash %>)
+        </div>
+        <div class="sectionHeader">
+            <h3><%= codeMarkup %></h3>
+        </div>
+        <div class="rules">
+            /--code c++<br />static const int = 0;<br />\--
+            <br /><br />
+            [code lang=&quot;cpp&quot;]static const int x = 0;[/code]
+            <br /></br />
+            [c++]static const int x = 0;[/c++]
+            <br />
+            <div class="codeBlock"><pre><tt><b><font color="#0000FF">static</font></b> <b><font color="#0000FF">const</font></b> <font color="#009900">int</font> x <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font></tt></pre></div>
+        </div>
+        <div class="sectionHeader">
+            <h3><%= listMarkup %></h3>
+        </div>
+        <div class="rules">
+            <table>
+                <tr>
+                    <td>
+                        [ul type="disc"][li]<%= listItem1 %>[/li]
+                        <br />[li]<%= listItem2 %>[/li]
+                        <br />[li]<%= listItem3 %>[/li][/ul]
+                    </td>
+                    <td>
+                        <ul type="disc">
+                            <li><%= listItem1 %></li>
+                            <li><%= listItem2 %></li>
+                            <li><%= listItem3 %></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        [ul type=circle]
+                        <br />
+                        [li]<%= listItem1 %>[/li]
+                        <br />
+                        [li]<%= listItem2 %>[/li]
+                        <br />
+                        [li]<%= listItem3 %>[/li]
+                        <br />
+                        [/ul]
+                    </td>
+                    <td>
+                        <ul type="circle">
+                            <li><%= listItem1 %></li>
+                            <li><%= listItem2 %></li>
+                            <li><%= listItem3 %></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        [ul type=s]
+                        <br />
+                        [li]<%= listItem1 %>[/li]
+                        <br />
+                        [li]<%= listItem2 %>[/li]
+                        <br />
+                        [li]<%= listItem3 %>[/li]
+                        <br />
+                        [/ul]
+                    </td>
+                    <td>
+                        <ul type="square">
+                            <li><%= listItem1 %></li>
+                            <li><%= listItem2 %></li>
+                            <li><%= listItem3 %></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        [ol]
+                        <br />
+                        [li value=1]<%= listItem1 %>[/li]
+                        <br />
+                        [li]<%= listItem2 %>[/li]
+                        <br />
+                        [li value=5]<%= listItem3 %>[/li]
+                        <br />
+                        [/ol]
+                    </td>
+                    <td>
+                        <ol>
+                            <li value="1"><%= listItem1 %></li>
+                            <li value="2"><%= listItem2 %></li>
+                            <li value="5"><%= listItem3 %></li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <% include customFooter() %>
+    </body>
+</html>
+<% end template %>
+
+<% end view %>
+<% end skin %>

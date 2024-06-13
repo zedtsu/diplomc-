@@ -1,0 +1,37 @@
+<% c++ #include "controller/playlist.h" %>
+<% skin my_skin %>
+<% view playlist uses Content::Playlist extends base %>
+
+<% template render() %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <% include baseHead(1) %>
+        <% if ( content.mode.name != "ascetic" ) %>
+            <script type="text/javascript" src="/<%= sitePathPrefix %>js/playlist.js"></script>
+        <% end %>
+    </head>
+    <body class="<%= deviceType %>">
+        <% include baseTexts() %>
+        <input type="hidden" id="downloadPlaylistFileText" value="<%= downloadPlaylistFileText %>" />
+        <input type="hidden" id="removeFromPlaylistText" value="<%= removeFromPlaylistText %>" />
+        <input type="hidden" id="unknownAlbumText" value="<%= unknownAlbumText %>" />
+        <input type="hidden" id="unknownArtistText" value="<%= unknownArtistText %>" />
+        <input type="hidden" id="unknownTitleText" value="<%= unknownTitleText %>" />
+        <% include customHeader() %>
+        <% include settings() %>
+        <br />
+        <% include navbar() %>
+        <br />
+        <% include searchAction() %>
+        <div class="theTitle">
+            <h1><%= pageTitle %></h1>
+        </div>
+        <div id="playlist"></div>
+        <% include customFooter() %>
+    </body>
+</html>
+<% end template %>
+
+<% end view %>
+<% end skin %>

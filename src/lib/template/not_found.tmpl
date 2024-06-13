@@ -1,0 +1,31 @@
+<% c++ #include "controller/notfound.h" %>
+<% skin my_skin %>
+<% view not_found uses Content::NotFound extends base %>
+
+<% template render() %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <% include baseHead(1) %>
+    </head>
+    <body class="<%= deviceType %>">
+        <% include baseTexts() %>
+        <% include customHeader() %>
+        <% include settings() %>
+        <br />
+        <% include navbar() %>
+        <br />
+        <% include searchAction() %>
+        <div class="theTitle">
+            <h1><%= notFoundMessage %></h1>
+        </div>
+        <div class="theImage">
+            <img src="/<%= sitePathPrefix %>img/<%= imageFileName %>" title="<%= imageTitle %>">
+        </div>
+        <% include customFooter() %>
+    </body>
+</html>
+<% end template %>
+
+<% end view %>
+<% end skin %>
